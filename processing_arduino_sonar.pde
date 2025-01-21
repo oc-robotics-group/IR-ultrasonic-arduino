@@ -73,14 +73,16 @@ void draw() {
 }
  
 void serialEvent(Serial port) {
-  rawData = port.readStringUntil('.');
-  if (rawData != null) {
+  try {
+    rawData = port.readStringUntil('.');
     rawData = rawData.substring(0, rawData.length() - 1); // Remove trailing '.'
     commaIndex1 = rawData.indexOf(",");
     angleData = rawData.substring(0, commaIndex1);
     distanceData = rawData.substring(commaIndex1 + 1, rawData.length());
     parsedAngle = int(angleData);
     parsedDistance = int(distanceData);
+  } catch (RuntimeException e) {
+    e.printStackTrace();
   }
 }
  
